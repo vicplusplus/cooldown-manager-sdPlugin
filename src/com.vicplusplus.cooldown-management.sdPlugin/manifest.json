@@ -1,6 +1,6 @@
 {
 	"SDKVersion": 2,
-	"Author": "Elgato Systems",
+	"Author": "vicplusplus",
 	"CodePath": "app.html",
 	"Description": "Example description",
 	"Name": "Stream Deck Template",
@@ -20,13 +20,16 @@
 			"MinimumVersion": "10"
 		}
 	],
-	"Category": "Template Plugin",
-	"CategoryIcon": "actions/template/assets/actionimage",
+	"Category": "Elsword",
+	"CategoryIcon": "logo",
 	"Actions": [
 		{
 			"Icon": "actions/template/assets/actionimage",
 			"Name": "Example Action",
-			"Controllers": ["Keypad", "Encoder"],
+			"Controllers": [
+				"Keypad",
+				"Encoder"
+			],
 			"Encoder": {
 				"layout": "$B1",
 				"TriggerDescription": {
