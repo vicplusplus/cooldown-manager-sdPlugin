@@ -31,7 +31,9 @@ myAction.onKeyDown(({ action, context, device, event, payload }) => {
 });
 
 function updateTitle(context, payload) {
-	$SD.setTitle(context, getTime(payload).toFixed(0))
+	let time = getTime(payload);
+
+	$SD.setTitle(context, (time != 0) ? time.toFixed(0) : "")
 }
 
 function getTime(payload) {
