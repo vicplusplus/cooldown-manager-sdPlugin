@@ -4,7 +4,7 @@ import asyncio
 import keyboard
 from websockets.server import serve
 
-pos_to_ws = {}
+ctx_to_event = {}
 
 
 async def handle(websocket):
@@ -18,34 +18,32 @@ async def main():
 
 
 async def register_cooldown_hotkey(data, ws):
-    key = data["settings"]["keycode"]
-
-    pos = "{}{}".format(data["coordinates"]["column"], data["coordinates"]["row"])
-
-    if pos in pos_to_ws:
-        remove_cooldown_hotkey(pos)
-
-    add_cooldown_hotkey(pos, key, ws)
-
-
-async def update_client(pos):
+    if data["context"] in ctx_to_event:
+        remove_cooldown_hotkey(data["context"])
     try:
-        await pos_to_ws[pos][0].send("reset")
-        print("fired", pos)
+        add_cooldown_hotkey(data["context"], data["payload"]["settings"]["keycode"], ws)
+    except KeyError:
+        print("Missing key")
+
+
+async def update_client(ws, ctx):
+    try:
+        await ws.send(ctx)
+        print("fired", ctx)
     except:
-        await pos_to_ws[pos][0].close()
-        remove_cooldown_hotkey(pos)
+        await ws.close()
+        remove_cooldown_hotkey(ctx)
 
 
-def remove_cooldown_hotkey(pos):
-    keyboard.remove_hotkey(pos_to_ws[pos][1])
-    pos_to_ws.pop(pos)
-    print("removed", pos)
+def remove_cooldown_hotkey(ctx):
+    keyboard.remove_hotkey(ctx_to_event[ctx])
+    ctx_to_event.pop(ctx)
+    print("removed", ctx)
 
 
-def add_cooldown_hotkey(pos, key, ws):
-    event = keyboard.add_hotkey(key, lambda: asyncio.run(update_client(pos)))
-    pos_to_ws[pos] = [ws, event]
+def add_cooldown_hotkey(ctx, key, ws):
+    event = keyboard.add_hotkey(key, lambda: asyncio.run(update_client(ws, ctx)))
+    ctx_to_event[ctx] = event
     print("registered", key)
 
 
