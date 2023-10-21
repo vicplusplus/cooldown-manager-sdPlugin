@@ -3,8 +3,8 @@
 	"Author": "vicplusplus",
 	"CodePath": "app.html",
 	"Description": "Example description",
-	"Name": "Stream Deck Template",
-	"Icon": "actions/template/assets/action",
+	"Name": "Cooldown",
+	"Icon": "actions/cooldown/assets/action",
 	"URL": "https://www.elgato.com/en/gaming/stream-deck",
 	"Version": "1.0.2",
 	"Software": {
@@ -20,12 +20,12 @@
 			"MinimumVersion": "10"
 		}
 	],
-	"Category": "Elsword",
+	"Category": "Cooldown",
 	"CategoryIcon": "logo",
 	"Actions": [
 		{
-			"Icon": "actions/template/assets/actionimage",
-			"Name": "Example Action",
+			"Icon": "actions/cooldown/assets/actionimage",
+			"Name": "Cooldown",
 			"Controllers": [
 				"Keypad",
 				"Encoder"
@@ -41,12 +41,12 @@
 			},
 			"States": [
 				{
-					"Image": "actions/template/assets/action"
+					"Image": "actions/cooldown/assets/action"
 				}
 			],
 			"Tooltip": "This is an example tooltip",
-			"UUID": "com.elgato.template.action",
-			"PropertyInspectorPath": "actions/template/property-inspector/inspector.html"
+			"UUID": "com.vicplusplus.cooldown",
+			"PropertyInspectorPath": "actions/cooldown/property-inspector/inspector.html"
 		}
 	]
 }

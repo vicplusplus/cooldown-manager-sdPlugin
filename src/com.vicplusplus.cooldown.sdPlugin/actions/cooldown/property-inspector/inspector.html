@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui,viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>com.vicplusplus.cooldown Property Inspector</title>
+    <link rel="stylesheet" href="../../../libs/css/sdpi.css" />
+</head>
+
+<body>
+    <div class="sdpi-wrapper">
+        <div type="tabs" class="sdpi-item">
+            <div class="sdpi-item-label empty"></div>
+        </div>
+        <form id="property-inspector">
+            <div id="tab1" class="tab-container">
+                <div class="sdpi-item">
+                    <div data-localize class="sdpi-item-label" title="Name">Name</div>
+                    <input data-localize class="sdpi-item-value" name="name" type="text" value=""
+                        placeholder="Cooldown Name" required />
+                </div>
+
+                <div class="sdpi-item">
+                    <div data-localize class="sdpi-item-label" title="KeyCode">KeyCode</div>
+                    <input data-localize class="sdpi-item-value" name="keycode" type="text" value="" placeholder=""
+                        required>
+                    </input>
+                </div>
+
+                <div class="sdpi-item">
+                    <div data-localize class="sdpi-item-label" title="Length">Length (s)</div>
+                    <input data-localize class="sdpi-item-value" name="length" type="text" value="" placeholder="60"
+                        pattern="\d{1,}" required>
+                    </input>
+                </div>
+
+                <div class="sdpi-item">
+                    <div data-localize class="sdpi-item-label" title="Refresh">Refresh</div>
+                    <input data-localize class="sdpi-item-value" id="forceTimeout" type="checkbox">
+                    <label for="forceTimeout"><span></span>Force timeout before refreshing?</label>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Stream Deck Libs -->
+    <script src="../../../libs/js/constants.js"></script>
+    <script src="../../../libs/js/prototypes.js"></script>
+    <script src="../../../libs/js/timers.js"></script>
+    <script src="../../../libs/js/utils.js"></script>
+    <script src="../../../libs/js/events.js"></script>
+    <script src="../../../libs/js/api.js"></script>
+    <script src="../../../libs/js/property-inspector.js"></script>
+    <script src="../../../libs/js/dynamic-styles.js"></script>
+
+    <!-- Property Inspector Source -->
+    <script src="inspector.js"></script>
+</body>
+
+</html>
