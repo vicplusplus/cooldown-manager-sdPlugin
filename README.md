@@ -59,6 +59,8 @@
 
 3. The plugin now listens for keybinds you've set. When pressed, the server communicates with the plugin to potentially reset the timer.
 
+4. For available keys and their names, check this file: https://github.com/boppreh/keyboard/blob/master/keyboard/_canonical_names.py
+
 ### Troubleshooting:
 
 - Ensure symbolic link creation in the Stream Deck directory and WebSocket server setup were successful.
