@@ -1,4 +1,4 @@
-## Cooldown Manager for Elgato Stream Deck
+# Cooldown Manager for Elgato Stream Deck
 
 **Description**: Manage in-game cooldowns using the Elgato Stream Deck with a combination of a JavaScript plugin for button setup and a Python WebSocket server for keybind listening.
 
