@@ -42,9 +42,12 @@ def remove_cooldown_hotkey(ctx):
 
 
 def add_cooldown_hotkey(ctx, key, ws):
-    event = keyboard.add_hotkey(key, lambda: asyncio.run(update_client(ws, ctx)))
-    ctx_to_event[ctx] = event
-    print("registered", key)
+    try:
+        event = keyboard.add_hotkey(key, lambda: asyncio.run(update_client(ws, ctx)))
+        ctx_to_event[ctx] = event
+        print("registered", key)
+    except ValueError:
+        print("invalid key", key, "(ignoring)")
 
 
 asyncio.run(main())

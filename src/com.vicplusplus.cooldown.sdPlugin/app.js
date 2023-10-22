@@ -4,6 +4,7 @@
 const myAction = new Action('com.vicplusplus.cooldown');
 var keyboardListenerSocket;
 var streamDeckSocket;
+var interval;
 
 var ctx_to_data = {}
 
@@ -11,17 +12,20 @@ myAction.onWillAppear(refresh);
 myAction.onDidReceiveSettings(refresh)
 myAction.onKeyDown(refresh);
 
-function refresh({ context, payload }) {
+setInterval(() => {
+	for (let ctx in ctx_to_data) {
+		updateTitle(ctx);
+	}
+}, 1000);
 
-	console.log(`refreshing ${context} with ${JSON.stringify(payload)}`);
+function refresh({ context, payload }) {
 	ctx_to_data[context] = {
 		context,
 		lastResetTime: 0,
-		payload,
-		interval: null
+		payload
 	}
-
 	connectToKeyboardListener();
+	sendKeys();
 }
 
 function updateTitle(context) {
@@ -38,21 +42,19 @@ function getTime(context) {
 function connectToKeyboardListener() {
 	if (keyboardListenerSocket === undefined || keyboardListenerSocket.readyState === WebSocket.CLOSED) {
 		keyboardListenerSocket = new WebSocket("ws://localhost:8765");
-		keyboardListenerSocket.onopen = () => {
-			for (let ctx in ctx_to_data) {
-				keyboardListenerSocket.send(JSON.stringify({ context: ctx, payload: ctx_to_data[ctx].payload }));
-			}
-		}
+		keyboardListenerSocket.onopen = sendKeys;
 		keyboardListenerSocket.onmessage = (event) => {
 			let context = event.data;
 			let data = ctx_to_data[context];
-			if (!data.payload.settings.forceTimeout || getTime(context) === 0)
+			if (!data.payload.settings.forceTimeout || getTime(context) === 0) {
 				data.lastResetTime = Date.now();
-			if (data.interval) {
-				clearInterval(data.interval);
 			}
-			updateTitle(context);
-			data.interval = setInterval(updateTitle, 1000, context);
 		}
+	}
+}
+
+function sendKeys() {
+	for (let ctx in ctx_to_data) {
+		keyboardListenerSocket.send(JSON.stringify({ context: ctx, payload: ctx_to_data[ctx].payload }));
 	}
 }
