@@ -1,73 +1,61 @@
+## Cooldown Manager for Elgato Stream Deck
 
-# Stream Deck Plugin Template
+**Description**: This plugin helps you manage in-game cooldowns using the Elgato Stream Deck. It consists of a JavaScript plugin for setting up your buttons and a Python WebSocket server for listening to your keybinds.
 
-The `Stream Deck Plugin Template` is a template to let you get started quickly when writing a JavaScript plugin for [Stream Deck](https://developer.elgato.com/documentation/stream-deck/). `Stream Deck Plugin Template` requires Stream Deck 6.0 or later.
+### Prerequisites:
 
-## Description
+- Knowledge of your system's file system and directory structures.
+- Installed Elgato Stream Deck software.
+- Python installed on your computer.
 
-`Stream Deck Plugin Template` is a complete plugin that shows you how to
+### Installation:
 
-- load and save settings using Stream Deck's persistent store
-- setup and communicate with the Property Inspector
-- pass messages directly from Property Inspector to the plugin (and vice versa)
-- localize your Property Inspector's UI to another language
+1. **Setting up the JavaScript Plugin**
 
-## Features
+    a. Navigate to your Stream Deck's plugin directory:
 
-- code written in Javascript
-- cross-platform (macOS, Windows)
-- localization support
-- styled [Property Inspector](https://developer.elgato.com/documentation/stream-deck/sdk/property-inspector/) included
-- Property Inspector contains all required boilerplate code to let you instantly work on your plugin's code.
+    ```
+    ...\AppData\Roaming\Elgato\StreamDeck\Plugins\
+    ```
 
-## Quick Start Guide
+    b. Create a symbolic link from the above directory to the plugin folder in the cloned repository:
 
-A short guide to help you get started quickly.
+    ```
+    <cloned repo directory>\src\com.vicplusplus.cooldown.sdPlugin
+    ```
 
-### Clone the repo
+    This will make the Stream Deck software recognize the plugin.
 
-```git clone https://github.com/elgatosf/streamdeck-plugin-template```
+2. **Setting up the WebSocket Server**
 
-### Replace Name
+    a. Navigate to the directory where the `main.py` file is located:
 
-Rename the folder as well as any references.
+    ```
+    ...\src\cdmanager\
+    ```
 
-`com.elgato.template.sdPlugin` with `my.domain.plugin-name.sdPlugin`
+    b. Run the `main.py` script:
 
-> [!IMPORTANT]  
-> When sym-linking the plugin, the folder name must end with `.sdPlugin`.
+    ```
+    python main.py
+    ```
 
-### Get the latest library
+    This will start the WebSocket server that listens to the keyboard input.
 
-You can either clone the javascript library or add it as a submodule to your repository.
+### Usage:
 
-#### Clone
+1. Once both the symbolic link has been created and the WebSocket server is running, you can open the Elgato Stream Deck software.
 
-```git clone https://github.com/elgatosf/streamdeck-javascript-sdk src/my.domain.plugin-name/libs```
+2. Set up your buttons using the provided interface. Ensure you input the cooldown name, length, and whether or not it can be prematurely refreshed. You can also customize the image and text display, though this is outside of the scope of the plugin.
 
-#### Add Submodule
+3. The plugin will now listen for the keybinds you've set in the button settings. When the specified key is pressed, the server will communicate with the plugin to reset the timer.
 
-```git submodule add https://github.com/elgatosf/streamdeck-javascript-sdk src/my.domain.plugin-name/libs```
+### Troubleshooting:
 
-### Start Coding
+- Ensure both the symbolic link and the WebSocket server are properly set up.
+- Check if Python is running and the `main.py` script doesn't have any errors.
+- Ensure your Stream Deck software is up-to-date.
 
-You can get started in app.js!
+**Note**: It's essential to have both the plugin and server running for the cooldown management to function correctly.
 
-```javascript
-const myAction = new Action('com.elgato.template.action');
-
-/**
- * The first event fired when Stream Deck starts
- */
-$SD.onConnected(({ actionInfo, appInfo, connection, messageType, port, uuid }) => {
-  console.log('Stream Deck connected!');
-});
-
-myAction.onKeyUp(({ action, context, device, event, payload }) => {
-  console.log('Your key code goes here!');
-});
-
-myAction.onDialRotate(({ action, context, device, event, payload }) => {
-  console.log('Your dial code goes here!');
-});
-```
+We hope this makes your gaming sessions smoother and more organized!
