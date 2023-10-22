@@ -1,61 +1,70 @@
 ## Cooldown Manager for Elgato Stream Deck
 
-**Description**: This plugin helps you manage in-game cooldowns using the Elgato Stream Deck. It consists of a JavaScript plugin for setting up your buttons and a Python WebSocket server for listening to your keybinds.
+**Description**: Manage in-game cooldowns using the Elgato Stream Deck with a combination of a JavaScript plugin for button setup and a Python WebSocket server for keybind listening.
 
 ### Prerequisites:
 
-- Knowledge of your system's file system and directory structures.
+- Basic familiarity with terminal or command prompt.
 - Installed Elgato Stream Deck software.
-- Python installed on your computer.
+- Python installed on your system.
+- Git installed on your system.
 
 ### Installation:
 
-1. **Setting up the JavaScript Plugin**
+1. **Clone the Repository**
 
-    a. Navigate to your Stream Deck's plugin directory:
+    Open your terminal or command prompt:
 
-    ```
-    ...\AppData\Roaming\Elgato\StreamDeck\Plugins\
-    ```
-
-    b. Create a symbolic link from the above directory to the plugin folder in the cloned repository:
-
-    ```
-    <cloned repo directory>\src\com.vicplusplus.cooldown.sdPlugin
+    ```bash
+    git clone https://github.com/vicplusplus/cooldown-manager-sdPlugin.git
     ```
 
-    This will make the Stream Deck software recognize the plugin.
+2. **Setting up the JavaScript Plugin**
 
-2. **Setting up the WebSocket Server**
+    Create a symbolic link in the Stream Deck's plugin directory that points to the plugin folder in the cloned repository:
 
-    a. Navigate to the directory where the `main.py` file is located:
+    - **For Windows** (using Command Prompt as administrator):
+
+        ```bash
+        mklink /D "%APPDATA%\Elgato\StreamDeck\Plugins\com.vicplusplus.cooldown.sdPlugin" "<path to cloned repo>\cooldown-manager-sdPlugin\src\com.vicplusplus.cooldown.sdPlugin"
+        ```
+
+    - **For macOS and Linux**:
+
+        ```bash
+        ln -s <path to cloned repo>/cooldown-manager-sdPlugin/src/com.vicplusplus.cooldown.sdPlugin ~/Library/Application\ Support/com.elgato.StreamDeck/Plugins/com.vicplusplus.cooldown.sdPlugin.sdPlugin
+        ```
+
+3. **Setting up the WebSocket Server**
+
+    a. Navigate to the directory containing `main.py` inside the cloned repository:
 
     ```
-    ...\src\cdmanager\
+    <path to cloned repo>/cooldown-manager-sdPlugin/src/cdmanager/
     ```
 
-    b. Run the `main.py` script:
+    b. Run:
 
-    ```
+    ```bash
     python main.py
     ```
 
-    This will start the WebSocket server that listens to the keyboard input.
+    This starts the WebSocket server.
 
 ### Usage:
 
-1. Once both the symbolic link has been created and the WebSocket server is running, you can open the Elgato Stream Deck software.
+1. With the symlink established in the Stream Deck's plugin directory and the WebSocket server running, open the Elgato Stream Deck software.
 
-2. Set up your buttons using the provided interface. Ensure you input the cooldown name, length, and whether or not it can be prematurely refreshed. You can also customize the image and text display, though this is outside of the scope of the plugin.
+2. Set up your buttons: Input cooldown name, length, and potential premature refresh details. Image and text customization is outside this plugin's scope.
 
-3. The plugin will now listen for the keybinds you've set in the button settings. When the specified key is pressed, the server will communicate with the plugin to reset the timer.
+3. The plugin now listens for keybinds you've set. When pressed, the server communicates with the plugin to potentially reset the timer.
 
 ### Troubleshooting:
 
-- Ensure both the symbolic link and the WebSocket server are properly set up.
-- Check if Python is running and the `main.py` script doesn't have any errors.
-- Ensure your Stream Deck software is up-to-date.
+- Ensure symbolic link creation in the Stream Deck directory and WebSocket server setup were successful.
+- Ensure Python and the `main.py` script are running without issues.
+- Confirm your Stream Deck software version is current.
 
-**Note**: It's essential to have both the plugin and server running for the cooldown management to function correctly.
+**Note**: Both the plugin and server must be active for correct cooldown management.
 
-We hope this makes your gaming sessions smoother and more organized!
+We wish you smooth and organized gaming sessions!
