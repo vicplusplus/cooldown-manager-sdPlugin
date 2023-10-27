@@ -32,6 +32,10 @@ function refresh({ context, payload }) {
 		ended: true,
 	};
 
+	for (let ctx in ctx_to_data) {
+		ctx_to_data[ctx].lastResetTime = 0;
+	}
+
 	if (keyboardListenerSocket && keyboardListenerSocket.readyState === WebSocket.OPEN) {
 		sendKeys();
 	}
