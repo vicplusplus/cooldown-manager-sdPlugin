@@ -32,9 +32,7 @@ function refresh({ context, payload }) {
 		ended: true,
 	};
 
-	for (let ctx in ctx_to_data) {
-		ctx_to_data[ctx].lastResetTime = 0;
-	}
+	wipeCooldowns();
 
 	if (keyboardListenerSocket && keyboardListenerSocket.readyState === WebSocket.OPEN) {
 		sendKeys();
@@ -61,17 +59,20 @@ function onCooldownEnd(context) {
 	data.ended = true;
 }
 
+function resetCooldown(context) {
+	let data = ctx_to_data[context];
+	if (!data.payload.settings.forceTimeout || getTime(context) === 0) {
+		data.lastResetTime = Date.now();
+		data.ended = false;
+	}
+}
+
 function connectToKeyboardListener() {
 	if (keyboardListenerSocket === undefined || keyboardListenerSocket.readyState === WebSocket.CLOSED) {
 		keyboardListenerSocket = new WebSocket("ws://localhost:8765");
 		keyboardListenerSocket.onopen = sendKeys;
 		keyboardListenerSocket.onmessage = (event) => {
-			let context = event.data;
-			let data = ctx_to_data[context];
-			if (!data.payload.settings.forceTimeout || getTime(context) === 0) {
-				data.lastResetTime = Date.now();
-				data.ended = false;
-			}
+			resetCooldown(event.data);
 		}
 	}
 }
@@ -79,6 +80,13 @@ function connectToKeyboardListener() {
 function sendKeys() {
 	for (let ctx in ctx_to_data) {
 		keyboardListenerSocket.send(JSON.stringify({ context: ctx, payload: ctx_to_data[ctx].payload }));
+	}
+}
+
+function wipeCooldowns() {
+	for (let ctx in ctx_to_data) {
+		ctx_to_data[ctx].lastResetTime = 0;
+		ctx_to_data[ctx].ended = true;
 	}
 }
 
