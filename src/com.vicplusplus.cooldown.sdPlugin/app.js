@@ -14,7 +14,7 @@ myAction.onDidReceiveSettings(({ context, payload }) => {
 	console.log(JSON.stringify(payload.settings))
 });
 myAction.onKeyDown(({ context }) => {
-	resetCooldown(context);
+	wipeCooldowns()
 });
 
 setInterval(() => {
