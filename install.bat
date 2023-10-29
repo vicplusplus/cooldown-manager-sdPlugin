@@ -1,5 +1,5 @@
 @echo off
-setlocal
+setlocal enabledelayedexpansion
 
 :: 1. Check if Python is installed and in PATH
 python --version
@@ -41,11 +41,12 @@ set "PluginDest=C:\Users\%username%\AppData\Roaming\Elgato\StreamDeck\Plugins\co
 if not exist "%PluginDest%" (
     echo Creating symbolic link...
     mklink /D "%PluginDest%" "%~dp0src\com.vicplusplus.cooldown.sdPlugin"
-    if %errorlevel% neq 0 (
+    set "mklinkError=!errorlevel!"
+    if !mklinkError! neq 0 (
         echo.
         echo Failed to create symbolic link. Please run this script as administrator.
         pause
-        exit /b
+        exit /b 1
     )
 ) else (
     echo.
@@ -54,6 +55,6 @@ if not exist "%PluginDest%" (
 )
 
 echo.
-echo Installation completed!
+echo Installation completed! Quit an re-open Stream Deck for changes to apply.
 pause
 endlocal

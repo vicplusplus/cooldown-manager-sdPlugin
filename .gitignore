@@ -7,4 +7,4 @@ package.json
 .history
 __exclude
 .editorconfig
-src/com.vicplusplus.cooldown-management.sdPlugin/libs/
+src/com.vicplusplus.cooldown.sdPlugin/libs/
