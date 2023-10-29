@@ -13,7 +13,9 @@ myAction.onDidReceiveSettings(({ context, payload }) => {
 	refresh({ context, payload });
 	console.log(JSON.stringify(payload.settings))
 });
-myAction.onKeyDown(refresh);
+myAction.onKeyDown(({ context }) => {
+	resetCooldown(context);
+});
 
 setInterval(() => {
 	for (let ctx in ctx_to_data) {
