@@ -19,8 +19,8 @@
 2. Navigate to the repository folder and run the `install.bat` script to automate the installation process.
 
 3. Go to `src/cdmanager` and:
-   - Run `start_server.bat` to start the WebSocket server in the background (it won't show any window).
-   - Use `run_server.bat` if you wish to see the server operations in a command prompt window.
+   - Run `start_in_background.bat` to start the WebSocket server in the background (it won't show any window).
+   - Use `start.bat` if you wish to see the server operations in a command prompt window.
 
 ## Manual Installation:
 
