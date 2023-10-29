@@ -33,7 +33,7 @@ async def update_client(ws, ctx):
         await ws.send(ctx)
         # print("fired", ctx)  # commented out to reduce excessive logging
     except:
-        print(f"Error updating client for context '{ctx}'. Closing connection.")
+        print(f"Error updating client. Closing connection.")
         await ws.close()
         remove_cooldown_hotkey(ctx)
 
