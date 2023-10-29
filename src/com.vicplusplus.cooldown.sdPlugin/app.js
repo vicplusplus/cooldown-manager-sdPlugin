@@ -37,7 +37,7 @@ function refresh({ context, payload }) {
 	wipeCooldowns();
 
 	if (keyboardListenerSocket && keyboardListenerSocket.readyState === WebSocket.OPEN) {
-		sendKeys();
+		sendKey(context);
 	}
 	else {
 		connectToKeyboardListener();
@@ -72,17 +72,19 @@ function resetCooldown(context) {
 function connectToKeyboardListener() {
 	if (keyboardListenerSocket === undefined || keyboardListenerSocket.readyState === WebSocket.CLOSED) {
 		keyboardListenerSocket = new WebSocket("ws://localhost:8765");
-		keyboardListenerSocket.onopen = sendKeys;
+		keyboardListenerSocket.onopen = () => {
+			for (let ctx in ctx_to_data) {
+				sendKey(ctx);
+			}
+		};
 		keyboardListenerSocket.onmessage = (event) => {
 			resetCooldown(event.data);
 		}
 	}
 }
 
-function sendKeys() {
-	for (let ctx in ctx_to_data) {
-		keyboardListenerSocket.send(JSON.stringify({ context: ctx, payload: ctx_to_data[ctx].payload }));
-	}
+function sendKey(ctx) {
+	keyboardListenerSocket.send(JSON.stringify({ context: ctx, payload: ctx_to_data[ctx].payload }));
 }
 
 function wipeCooldowns() {
