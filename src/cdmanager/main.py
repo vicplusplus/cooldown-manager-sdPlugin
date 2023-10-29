@@ -2,6 +2,7 @@
 import json
 import asyncio
 import keyboard
+import datetime, time
 from websockets.server import serve
 
 ctx_to_event = {}
@@ -30,7 +31,9 @@ async def register_cooldown_hotkey(data, ws):
 
 async def update_client(ws, ctx):
     try:
-        await ws.send(ctx)
+        d = datetime.datetime.now()
+        for_js = int(time.mktime(d.timetuple())) * 1000
+        await ws.send(json.dumps({"context": ctx, "time": for_js}))
         # print("fired", ctx)  # commented out to reduce excessive logging
     except:
         print(f"Error updating client. Closing connection.")

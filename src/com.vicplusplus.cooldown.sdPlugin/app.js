@@ -61,10 +61,10 @@ function onCooldownEnd(context) {
 	data.ended = true;
 }
 
-function resetCooldown(context) {
+function resetCooldown({ context, time }) {
 	let data = ctx_to_data[context];
 	if (!data.payload.settings.forceTimeout || getTime(context) === 0) {
-		data.lastResetTime = Date.now();
+		data.lastResetTime = time;
 		data.ended = false;
 	}
 }
@@ -78,7 +78,7 @@ function connectToKeyboardListener() {
 			}
 		};
 		keyboardListenerSocket.onmessage = (event) => {
-			resetCooldown(event.data);
+			resetCooldown(JSON.parse(event.data));
 		}
 	}
 }
