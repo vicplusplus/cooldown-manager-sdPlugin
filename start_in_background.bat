@@ -2,7 +2,7 @@
 setlocal
 
 :: Define the python script to run
-set "script=%~dp0main.py"
+set "script=%~dp0src/cdmanager/main.py"
 
 :: Check if the script exists
 if not exist "%script%" (
