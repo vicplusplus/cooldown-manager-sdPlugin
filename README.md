@@ -32,15 +32,15 @@
 2. **Download and Set Up the StreamDeck JavaScript SDK**:
    Clone the `streamdeck-javascript-sdk` into the `libs` directory:
    ```bash
-   git clone https://github.com/elgatosf/streamdeck-javascript-sdk.git cooldown-manager-sdPlugin\src\com.vicplusplus.cooldown.sdPlugin\libs
-   ```
+   git clone https://github.com/elgatosf/streamdeck-javascript-sdk.git <your repo directory>\src\com.vicplusplus.cooldown.sdPlugin\libs
+
 
 3. **Setting up the JavaScript Plugin**:
    Create a symbolic link in the Stream Deck's plugin directory that points to the plugin folder in the cloned repository:
 
    - **For Windows** (using Command Prompt as administrator):
      ```bash
-     mklink /D "%APPDATA%\Elgato\StreamDeck\Plugins\com.vicplusplus.cooldown.sdPlugin" "<path to cloned repo>\cooldown-manager-sdPlugin\src\com.vicplusplus.cooldown.sdPlugin"
+     mklink /D "%APPDATA%\Elgato\StreamDeck\Plugins\com.vicplusplus.cooldown.sdPlugin" "<your repo directory>\src\com.vicplusplus.cooldown.sdPlugin"
      ```
 
    - **For macOS and Linux**:
@@ -50,7 +50,7 @@
 
 4. **Setting up the WebSocket Server**:
 
-   a. Navigate to the directory containing `main.py` inside the cloned repository: `<path to cloned repo>/cooldown-manager-sdPlugin/src/cdmanager/`
+   a. Navigate to the directory containing `main.py` inside the cloned repository: `<your repo directory>/src/cdmanager/`
 
    b. Install required Python packages:
    ```bash
