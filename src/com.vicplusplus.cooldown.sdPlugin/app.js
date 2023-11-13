@@ -20,11 +20,15 @@ myAction.onKeyDown(({ context }) => {
 setInterval(() => {
 	for (let ctx in ctx_to_data) {
 		updateTitle(ctx);
+		console.log(getTime(ctx))
 		if (getTime(ctx) == 0 && !ctx_to_data[ctx].ended) {
 			onCooldownEnd(ctx)
 		}
 	}
-}, 1000);
+}, 100);
+
+console.log("WebkitAppearance" in document.documentElement.style);
+console.log(escape(navigator.javaEnabled.toString()))
 
 function refresh({ context, payload }) {
 	ctx_to_data[context] = {
@@ -46,7 +50,7 @@ function refresh({ context, payload }) {
 
 function updateTitle(context) {
 	let time = getTime(context);
-	$SD.setTitle(context, (time != 0) ? time.toFixed(0) : "")
+	$SD.setTitle(context, (time != 0) ? time.toFixed(1) : "")
 }
 
 function getTime(context) {
@@ -77,9 +81,10 @@ function connectToKeyboardListener() {
 				sendKey(ctx);
 			}
 		};
-		keyboardListenerSocket.onmessage = (event) => {
+		keyboardListenerSocket.addEventListener("message", (event) => {
+			console.log("reset")
 			resetCooldown(JSON.parse(event.data));
-		}
+		});
 	}
 }
 

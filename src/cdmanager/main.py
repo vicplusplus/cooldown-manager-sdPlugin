@@ -16,7 +16,7 @@ async def handle(websocket):
 
 async def main():
     print("WebSocket server started. Awaiting connections on 'localhost:8765'...")
-    async with serve(handle, "localhost", 8765):
+    async with serve(handle, "localhost", 8765, ping_interval=0.1):
         await asyncio.Future()  # run forever
 
 
@@ -34,7 +34,8 @@ async def update_client(ws, ctx):
         d = datetime.datetime.now()
         for_js = int(time.mktime(d.timetuple())) * 1000
         await ws.send(json.dumps({"context": ctx, "time": for_js}))
-        # print("fired", ctx)  # commented out to reduce excessive logging
+        _, key = ctx_to_event[ctx]
+        print("fired", key)
     except:
         print(f"Error updating client. Closing connection.")
         await ws.close()
